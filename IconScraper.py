@@ -6,7 +6,7 @@ import hashlib
 import random
 import os
 import colorama
-from colorama import Fore # i like Pink text fuck you
+from colorama import Fore # i like pink text fuck you
 
 colorama.init(autoreset=True)
 scraper = cloudscraper.create_scraper()
@@ -21,10 +21,10 @@ image = 1
 
 if os.path.exists('pfps') == False:
     os.mkdir('pfps')
-if os.path.exists('pfps/'+tag) == False:
-    os.mkdir('pfps/'+tag)
+if os.path.exists('pfps/'+tag.lower()) == False:
+    os.mkdir('pfps/'+tag.lower())
 
-response = scraper.get("https://disboard.org/servers/tag/"+tag+"/"+"1").text
+response = scraper.get("https://disboard.org/servers/tag/"+tag.lower()+"/"+"1").text
 soup = BeautifulSoup(response, 'html.parser')
 soup = soup.find_all(class_ = "lazyload")
 while True:
@@ -33,22 +33,22 @@ while True:
 
     try:
         print(Fore.MAGENTA+soup[counter]['data-src'])
-        img_data = requests.get(soup[counter]['data-src']).content
+        try:
+            img_data = requests.get(soup[counter]['data-src']).content
+            thing = hashlib.sha256(img_data).hexdigest();
+            with open("pfps/"+tag+"/"+str(thing)+'.jpg', 'wb') as handler:
+                handler.write(img_data)
+            image = image + 1
+            counter = counter + 1
+        except:
+            counter = counter + 1
+            pass
 
-        thing = hashlib.sha256(img_data).hexdigest();
-
-        with open("pfps/"+tag+"/"+str(thing)+'.jpg', 'wb') as handler:
-            handler.write(img_data)
-
-        counter = counter + 1
-        image = image + 1
-        time.sleep(0.5)
-
-    except:
+    except IndexError:
         print(Fore.LIGHTMAGENTA_EX +"Waiting 7-10 seconds before grabbing another page.")
         time.sleep(random.randint(7,10))
 
-        response = scraper.get("https://disboard.org/servers/tag/"+tag+"/"+str(page)).text
+        response = scraper.get("https://disboard.org/servers/tag/"+tag.lower()+"/"+str(page)).text
         soup = BeautifulSoup(response, 'html.parser')
         soup = soup.find_all(class_ = "lazyload")
 
