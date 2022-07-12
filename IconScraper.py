@@ -5,11 +5,15 @@ import time
 import hashlib
 import random
 import os
+import colorama
+from colorama import Fore # i like LIGHTMAGENTA_EX  text fuck you
 
+colorama.init(autoreset=True)
 scraper = cloudscraper.create_scraper()
-print("VPNs and Proxies will break this bot.\n")
+print(Fore.LIGHTMAGENTA_EX +"VPNs and Proxies will break this bot.\n")
 
-tag = input("disboard tag >>> ")
+print(Fore.LIGHTMAGENTA_EX +"Put in a disboard tag")
+tag = input(">>> ")
 
 counter = 1
 page = 1
@@ -25,11 +29,10 @@ soup = BeautifulSoup(response, 'html.parser')
 soup = soup.find_all(class_ = "lazyload")
 while True:
 
-    print("Counter: "+str(counter)+" Page: "+str(page)+" Image: "+str(image))
+    print(Fore.LIGHTMAGENTA_EX +"Counter: "+str(counter)+" Page: "+str(page)+" Image: "+str(image))
 
     try:
-
-        print(soup[counter]['data-src'])
+        print(Fore.MAGENTA+soup[counter]['data-src'])
         img_data = requests.get(soup[counter]['data-src']).content
 
         thing = hashlib.sha256(img_data).hexdigest();
@@ -42,7 +45,7 @@ while True:
         time.sleep(0.5)
 
     except:
-        print("Waiting 7-10 seconds before grabbing another page.")
+        print(Fore.LIGHTMAGENTA_EX +"Waiting 7-10 seconds before grabbing another page.")
         time.sleep(random.randint(7,10))
 
         response = scraper.get("https://disboard.org/servers/tag/"+tag+"/"+str(page)).text
