@@ -6,7 +6,7 @@ import hashlib
 import random
 import os
 import colorama
-from colorama import Fore # i like LIGHTMAGENTA_EX  text fuck you
+from colorama import Fore # i like Pink text fuck you
 
 colorama.init(autoreset=True)
 scraper = cloudscraper.create_scraper()
