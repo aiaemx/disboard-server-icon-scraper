@@ -27,6 +27,7 @@ if os.path.exists('pfps/'+tag.lower()) == False:
 response = scraper.get("https://disboard.org/servers/tag/"+tag.lower()+"/"+"1").text
 soup = BeautifulSoup(response, 'html.parser')
 soup = soup.find_all(class_ = "lazyload")
+start = time.time()
 while True:
 
     print(Fore.LIGHTMAGENTA_EX +"Counter: "+str(counter)+" Page: "+str(page)+" Image: "+str(image))
@@ -45,6 +46,12 @@ while True:
             pass
 
     except IndexError:
+        end = time.time()
+        final = end - start
+        final = str(round(final/60, 2))
+
+        print(Fore.LIGHTMAGENTA_EX + "Elapsed Time: "+str(final)+" Minutes" )
+
         print(Fore.LIGHTMAGENTA_EX +"Waiting 7-10 seconds before grabbing another page.")
         time.sleep(random.randint(7,10))
 
