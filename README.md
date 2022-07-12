@@ -6,4 +6,4 @@ Requires cloudscraper and beautifulsoup4.
 ``pip install cloudscraper`` 
 ``pip install beautifulsoup4``
 
-**I am not responsible if you get IP-banned from disboard.ord or discord.com**
+**I am not responsible if you get IP-banned from disboard.org or discord.com**
